@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useSelector, useDispatch } from 'react-redux';
 import { 
   HomeIcon, 
   BookOpenIcon, 
@@ -10,17 +9,17 @@ import {
   AcademicCapIcon
 } from '@heroicons/react/24/outline';
 import Logo from './Logo';
-import { RootState } from '../store';
-import { logout } from '../store/slices/authSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { logoutUser } from '../store/slices/authSlice';
 
 const Navigation: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  const { user, isAuthenticated } = useAppSelector((state) => state.auth);
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutUser());
     navigate('/login');
   };
 

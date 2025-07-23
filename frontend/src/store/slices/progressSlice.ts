@@ -83,7 +83,7 @@ const initialState: ProgressState = {
 // Async thunks
 export const fetchUserProgress = createAsyncThunk(
   'progress/fetchUserProgress',
-  async (userId?: string, { rejectWithValue }) => {
+  async (userId: string | undefined = undefined, { rejectWithValue }) => {
     try {
       const response = await progressAPI.getProgress(userId);
       return response.data.progress;

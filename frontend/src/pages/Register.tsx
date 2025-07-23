@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import Logo from '../components/Logo';
+import { useAppDispatch } from '../store/hooks';
 import { registerUser } from '../store/slices/authSlice';
 
 const Register: React.FC = () => {
@@ -18,7 +18,7 @@ const Register: React.FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -38,14 +38,15 @@ const Register: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Mock registration for now
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Dispatch register action and wait for it to complete
+      const result = await dispatch(registerUser(formData));
       
-      // Dispatch register action
-      dispatch(registerUser(formData));
-      
-      toast.success('Account created successfully!');
-      navigate('/login');
+      if (registerUser.fulfilled.match(result)) {
+        toast.success('Account created successfully!');
+        navigate('/login');
+      } else if (registerUser.rejected.match(result)) {
+        toast.error(result.payload as string || 'Registration failed. Please try again.');
+      }
     } catch (error) {
       toast.error('Registration failed. Please try again.');
     } finally {

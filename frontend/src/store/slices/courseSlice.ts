@@ -92,14 +92,14 @@ const initialState: CourseState = {
 // Async thunks
 export const fetchCourses = createAsyncThunk(
   'courses/fetchCourses',
-  async (params?: {
+  async (params: {
     page?: number;
     limit?: number;
     search?: string;
     category?: string;
     department?: string;
     level?: string;
-  }, { rejectWithValue }) => {
+  } = {}, { rejectWithValue }) => {
     try {
       const response = await courseAPI.getCourses(params);
       return response.data;

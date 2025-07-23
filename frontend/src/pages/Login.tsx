@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
 import Logo from '../components/Logo';
+import { useAppDispatch } from '../store/hooks';
 import { loginUser } from '../store/slices/authSlice';
 
 const Login: React.FC = () => {
@@ -11,7 +11,7 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
