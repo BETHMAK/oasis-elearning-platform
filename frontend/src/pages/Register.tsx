@@ -39,15 +39,20 @@ const Register: React.FC = () => {
 
     try {
       // Dispatch register action and wait for it to complete
+      console.log('Submitting registration with data:', formData);
       const result = await dispatch(registerUser(formData));
+      console.log('Registration result:', result);
       
       if (registerUser.fulfilled.match(result)) {
-        toast.success('Account created successfully!');
-        navigate('/login');
+        console.log('Registration successful, navigating to dashboard');
+        toast.success('Account created successfully! Welcome to Oasis!');
+        navigate('/dashboard');
       } else if (registerUser.rejected.match(result)) {
+        console.log('Registration failed:', result.payload);
         toast.error(result.payload as string || 'Registration failed. Please try again.');
       }
     } catch (error) {
+      console.log('Registration error:', error);
       toast.error('Registration failed. Please try again.');
     } finally {
       setIsLoading(false);
