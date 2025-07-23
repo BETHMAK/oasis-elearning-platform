@@ -20,7 +20,7 @@ router.post('/', authenticateToken, authorizeRoles('admin'), async (req, res) =>
 });
 
 // Get all courses
-router.get('/', authenticateToken, async (req, res) =e {
+router.get('/', authenticateToken, async (req, res) => {
   try {
     const courses = await Course.find();
     res.json({
